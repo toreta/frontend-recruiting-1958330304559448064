@@ -9,9 +9,8 @@ export type Receipt = {
 };
 
 export type Payment = {
-  type: string;
-  percentage?: number;
-  amount?: number;
+  type: 'cash' | 'coupon-fixed' | 'coupon-percentage';
+  amount: number;
 };
 
 export function charge(invoice: Invoice, payments: Payment[]) {
@@ -19,19 +18,19 @@ export function charge(invoice: Invoice, payments: Payment[]) {
   let deposit = 0;
 
   payments
-    .sort((payment) => (payment.type !== 'CASH' ? -1 : 1))
+    .sort((payment) => (payment.type !== 'cash' ? -1 : 1))
     .map((payment) => {
-      if (payment.type === 'COUPON') {
-        if (payment.percentage != null) {
-          deposit += Math.floor(total * (payment.percentage / 100));
+      if (payment.type !== 'cash') {
+        if (payment.type == 'coupon-percentage') {
+          deposit += Math.floor(total * (payment.amount / 100));
         } else {
-          deposit += payment.amount || 0;
+          deposit += payment.amount;
         }
       } else {
         if (deposit >= total) {
           throw new Error('OverCharge');
         }
-        deposit += payment.amount || 0;
+        deposit += payment.amount;
       }
     });
   if (total > deposit) {
@@ -40,7 +39,7 @@ export function charge(invoice: Invoice, payments: Payment[]) {
 
   let isCoupon = true;
   for (let i = 0; i < payments.length; i++) {
-    if (payments[i].type !== 'COUPON') {
+    if (payments[i].type === 'cash') {
       isCoupon = false;
       continue;
     }

@@ -1,19 +1,19 @@
 import { Invoice, charge, Payment, Receipt } from './charge';
 
 describe('charge', () => {
-  const cashOnly: Payment[] = [{ type: 'CASH', amount: 10000 }];
+  const cashOnly: Payment[] = [{ type: 'cash', amount: 10000 }];
   const multipleCash: Payment[] = [
-    { type: 'CASH', amount: 5000 },
-    { type: 'CASH', amount: 5000 },
+    { type: 'cash', amount: 5000 },
+    { type: 'cash', amount: 5000 },
   ];
-  const couponOnly: Payment[] = [{ type: 'COUPON', amount: 10000 }];
+  const couponOnly: Payment[] = [{ type: 'coupon-fixed', amount: 10000 }];
   const cashAndCoupon: Payment[] = [
-    { type: 'CASH', amount: 5000 },
-    { type: 'COUPON', amount: 5000 },
+    { type: 'cash', amount: 5000 },
+    { type: 'coupon-fixed', amount: 5000 },
   ];
   const cashAndPercentageCoupon: Payment[] = [
-    { type: 'CASH', amount: 5000 },
-    { type: 'COUPON', percentage: 50 },
+    { type: 'cash', amount: 5000 },
+    { type: 'coupon-percentage', amount: 50 },
   ];
 
   it('過不足なく支払った場合、お釣りは0でレシートが返される', () => {
