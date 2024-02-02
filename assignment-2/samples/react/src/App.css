@@ -1,3 +1,31 @@
-.App {
-  text-align: center;
+.container {
+  padding: 32px 0;
+}
+
+.table {
+  margin: 0 auto;
+}
+
+.tr {
+  height: 44px;
+}
+
+.th {
+  padding-right: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.button {
+  display: block;
+  width: 100px;
+  height: 40px;
+  margin: 32px auto 0;
+  border: 0;
+  border-radius: 10px;
+  background-color: #5dd669;
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
 }
