@@ -93,158 +93,160 @@ function App() {
   return (
     <form className="container" onSubmit={formik.handleSubmit}>
       <table className="table">
-        <tr className="tr">
-          <th className="th">氏名</th>
-          <td>
-            <TextField
-              error={formik.touched.name && !!formik.errors.name}
-              helperText={formik.touched.name && formik.errors.name}
-              name="name"
-              placeholder="(例)トレタ 太郎"
-              size="small"
-              value={formik.values.name}
-              variant="outlined"
-              sx={{
-                "& .MuiInputBase-root": {
-                  width: "230px",
-                  height:"30px",
-                  fontSize: "12px"
-                }
-              }}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-          </td>
-        </tr>
-
-        <tr className="tr">
-          <th className="th">Eメール</th>
-          <td>
-            <TextField
-              error={formik.touched.email && !!formik.errors.email}
-              helperText={formik.touched.email && formik.errors.email}
-              name="email"
-              placeholder="(例)yoyaku@toreta.in"
-              size="small"
-              type="email"
-              value={formik.values.email}
-              variant="outlined"
-              sx={{
-                "& .MuiInputBase-root": {
-                  width: "230px",
-                  height:"30px",
-                  fontSize: "12px"
-                }
-              }}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-          </td>
-        </tr>
-
-        <tr className="tr">
-          <th className="th">郵便番号</th>
-          <td>
-            <TextField
-              error={formik.touched.zip && !!formik.errors.zip}
-              helperText={formik.touched.zip && formik.errors.zip}
-              name="zip"
-              placeholder="(例)0000000"
-              size="small"
-              value={formik.values.zip}
-              variant="outlined"
-              sx={{
-                "& .MuiInputBase-root": {
-                  width: "100px",
-                  height:"30px",
-                  fontSize: "12px"
-                }
-              }}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-          </td>
-        </tr>
-
-        <tr className="tr">
-          <th className="th">都道府県</th>
-          <td>
-            <FormControl
-              error={formik.touched.prefecture && !!formik.errors.prefecture}
-              sx={{
-                "& .MuiInputBase-root": {
-                  width: "230px",
-                  height:"30px",
-                  fontSize: "12px"
-                }
-              }}
-            >
-              <Select
-                name="prefecture"
+        <tbody>
+          <tr className="tr">
+            <th className="th">氏名</th>
+            <td>
+              <TextField
+                error={formik.touched.name && !!formik.errors.name}
+                helperText={formik.touched.name && formik.errors.name}
+                name="name"
+                placeholder="(例)トレタ 太郎"
                 size="small"
-                value={formik.values.prefecture}
+                value={formik.values.name}
+                variant="outlined"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: "230px",
+                    height:"30px",
+                    fontSize: "12px"
+                  }
+                }}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
+              />
+            </td>
+          </tr>
+
+          <tr className="tr">
+            <th className="th">Eメール</th>
+            <td>
+              <TextField
+                error={formik.touched.email && !!formik.errors.email}
+                helperText={formik.touched.email && formik.errors.email}
+                name="email"
+                placeholder="(例)yoyaku@toreta.in"
+                size="small"
+                type="email"
+                value={formik.values.email}
+                variant="outlined"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: "230px",
+                    height:"30px",
+                    fontSize: "12px"
+                  }
+                }}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+            </td>
+          </tr>
+
+          <tr className="tr">
+            <th className="th">郵便番号</th>
+            <td>
+              <TextField
+                error={formik.touched.zip && !!formik.errors.zip}
+                helperText={formik.touched.zip && formik.errors.zip}
+                name="zip"
+                placeholder="(例)0000000"
+                size="small"
+                value={formik.values.zip}
+                variant="outlined"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: "100px",
+                    height:"30px",
+                    fontSize: "12px"
+                  }
+                }}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+            </td>
+          </tr>
+
+          <tr className="tr">
+            <th className="th">都道府県</th>
+            <td>
+              <FormControl
+                error={formik.touched.prefecture && !!formik.errors.prefecture}
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: "230px",
+                    height:"30px",
+                    fontSize: "12px"
+                  }
+                }}
               >
-                <MenuItem value="*">
-                  <span style={{ opacity:0.38 }}>選択してください</span>
-                </MenuItem>
-                {allPrefectures.map((p) => (
-                  <MenuItem key={p} value={p}>{p}</MenuItem>
-                ))}
-              </Select>
-              {formik.touched.prefecture && (
-                <FormHelperText>{formik.errors.prefecture}</FormHelperText>
-              )}
-            </FormControl>
-          </td>
-        </tr>
+                <Select
+                  name="prefecture"
+                  size="small"
+                  value={formik.values.prefecture}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                >
+                  <MenuItem value="*">
+                    <span style={{ opacity:0.38 }}>選択してください</span>
+                  </MenuItem>
+                  {allPrefectures.map((p) => (
+                    <MenuItem key={p} value={p}>{p}</MenuItem>
+                  ))}
+                </Select>
+                {formik.touched.prefecture && (
+                  <FormHelperText>{formik.errors.prefecture}</FormHelperText>
+                )}
+              </FormControl>
+            </td>
+          </tr>
 
-        <tr className="tr">
-          <th className="th">市町村・番地</th>
-          <td>
-            <TextField
-              error={formik.touched.address1 && !!formik.errors.address1}
-              helperText={formik.touched.address1 && formik.errors.address1}
-              name="address1"
-              placeholder="(例)品川区西五反田７丁目２２−１７"
-              size="small"
-              value={formik.values.address1}
-              variant="outlined"
-              sx={{
-                "& .MuiInputBase-root": {
-                  width: "230px",
-                  height:"30px",
-                  fontSize: "12px"
-                }
-              }}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-          </td>
-        </tr>
+          <tr className="tr">
+            <th className="th">市町村・番地</th>
+            <td>
+              <TextField
+                error={formik.touched.address1 && !!formik.errors.address1}
+                helperText={formik.touched.address1 && formik.errors.address1}
+                name="address1"
+                placeholder="(例)品川区西五反田７丁目２２−１７"
+                size="small"
+                value={formik.values.address1}
+                variant="outlined"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: "230px",
+                    height:"30px",
+                    fontSize: "12px"
+                  }
+                }}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+            </td>
+          </tr>
 
-        <tr className="tr">
-          <th className="th">建物名・号室</th>
-          <td>
-            <TextField
-              name="address2"
-              placeholder="(例)TOCビル 8F"
-              size="small"
-              value={formik.values.address2}
-              variant="outlined"
-              sx={{
-                "& .MuiInputBase-root": {
-                  width: "230px",
-                  height:"30px",
-                  fontSize: "12px"
-                }
-              }}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            />
-          </td>
-        </tr>
+          <tr className="tr">
+            <th className="th">建物名・号室</th>
+            <td>
+              <TextField
+                name="address2"
+                placeholder="(例)TOCビル 8F"
+                size="small"
+                value={formik.values.address2}
+                variant="outlined"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: "230px",
+                    height:"30px",
+                    fontSize: "12px"
+                  }
+                }}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+            </td>
+          </tr>
+        </tbody>
       </table>
 
       <button
