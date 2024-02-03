@@ -9,42 +9,48 @@ export type Receipt = {
 };
 
 export type Payment = {
-  type: string;
-  percentage?: number;
-  amount?: number;
+  type:
+    | 'cash' // 現金
+    | 'coupon-fixed' // 定額クーポン
+    | 'coupon-percentage'; // 割引クーポン
+  amount: number;
 };
 
 export function charge(invoice: Invoice, payments: Payment[]) {
   const total = invoice.total;
-  let deposit = 0;
+  let cashDeposit = 0
+  let couponDeposit = 0
 
-  payments
-    .sort((payment) => (payment.type !== 'CASH' ? -1 : 1))
-    .map((payment) => {
-      if (payment.type === 'COUPON') {
-        if (payment.percentage != null) {
-          deposit += Math.floor(total * (payment.percentage / 100));
-        } else {
-          deposit += payment.amount || 0;
-        }
-      } else {
-        if (deposit >= total) {
-          throw new Error('OverCharge');
-        }
-        deposit += payment.amount || 0;
-      }
-    });
-  if (total > deposit) {
+  for (let i = 0; i < payments.length; i += 1) {
+    const p = payments[i]
+    switch (p.type) {
+      case 'cash':
+        cashDeposit += p.amount;
+        break;
+      case 'coupon-fixed':
+        couponDeposit += p.amount
+        break;
+      case 'coupon-percentage':
+        couponDeposit += Math.floor(total * (p.amount / 100));
+        break;
+      default:
+        throw new Error('UnknownPaymentType');
+    }
+  }
+
+  if (cashDeposit > 0 && couponDeposit >= total) {
+    throw new Error('OverCharge');
+  }
+
+  const deposit = cashDeposit + couponDeposit
+
+  if (deposit < total) {
     throw new Error('Shortage');
   }
 
-  let isCoupon = true;
-  for (let i = 0; i < payments.length; i++) {
-    if (payments[i].type !== 'COUPON') {
-      isCoupon = false;
-      continue;
-    }
+  if (cashDeposit === 0) {
+    return { total, deposit, change: 0 }
   }
-  if (isCoupon) return { total, deposit, change: 0 };
-  return { total: total, deposit: deposit, change: deposit - total };
+
+  return { total, deposit, change: deposit - total }
 }
